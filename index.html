@@ -67,6 +67,34 @@
         </header>
 
         <div class="container mx-auto px-4 py-8 max-w-6xl">
+            <!-- Search Bar -->
+            <div class="mb-8">
+                <div class="relative max-w-2xl mx-auto">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-turquoise-600 text-xl"></i>
+                    </div>
+                    <input 
+                        type="text" 
+                        id="searchAPI" 
+                        placeholder="Pesquisar APIs... (ex: CEP, CNPJ, clima, bancos)" 
+                        class="w-full pl-12 pr-4 py-4 text-lg border-2 border-turquoise-300 rounded-xl focus:ring-2 focus:ring-turquoise-500 focus:border-turquoise-500 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-white shadow-lg"
+                        oninput="searchAPIs()"
+                    >
+                    <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+                        <button 
+                            onclick="clearSearch()" 
+                            id="clearBtn" 
+                            class="text-gray-400 hover:text-turquoise-600 hidden"
+                        >
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="searchResults" class="text-center mt-4 text-gray-600 dark:text-gray-400 hidden">
+                    <span id="resultsCount">0</span> API(s) encontrada(s)
+                </div>
+            </div>
+
             <!-- Add New API Form -->
             <div class="add-api-form rounded-xl p-6 mb-8 shadow-lg">
                 <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
@@ -559,6 +587,67 @@
                     alertDiv.remove();
                 }
             }, 5000);
+        }
+
+        // Search APIs function
+        function searchAPIs() {
+            const searchTerm = document.getElementById('searchAPI').value.toLowerCase().trim();
+            const clearBtn = document.getElementById('clearBtn');
+            const searchResults = document.getElementById('searchResults');
+            const resultsCount = document.getElementById('resultsCount');
+            
+            // Show/hide clear button
+            if (searchTerm) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+            
+            const allCards = document.querySelectorAll('.api-card');
+            const allCategories = document.querySelectorAll('.category');
+            let visibleCount = 0;
+            
+            if (!searchTerm) {
+                // Show all cards and categories
+                allCards.forEach(card => {
+                    card.style.display = 'block';
+                });
+                allCategories.forEach(category => {
+                    category.style.display = 'block';
+                });
+                searchResults.classList.add('hidden');
+                return;
+            }
+            
+            // Hide all categories first
+            allCategories.forEach(category => {
+                category.style.display = 'none';
+            });
+            
+            // Search and show matching cards
+            allCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const description = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    card.closest('.category').style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Show search results count
+            resultsCount.textContent = visibleCount;
+            searchResults.classList.remove('hidden');
+        }
+        
+        // Clear search function
+        function clearSearch() {
+            document.getElementById('searchAPI').value = '';
+            document.getElementById('clearBtn').classList.add('hidden');
+            searchAPIs();
         }
 
         // Enter key support for form
