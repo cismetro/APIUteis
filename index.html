@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APIs Úteis - Catálogo Completo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        turquoise: {
+                            50: '#ebf9f9',
+                            100: '#d8f3f2',
+                            200: '#c4edec',
+                            300: '#b1e7e5',
+                            400: '#9de1df',
+                            500: '#8adbd8',
+                            600: '#76d5d2',
+                            700: '#63cfcb',
+                            800: '#4fc9c4',
+                            900: '#3cc3bf',
+                            950: '#36b0ac'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .api-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid #4fc9c4;
+        }
+        .api-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 201, 196, 0.15);
+            border-left-color: #3cc3bf;
+        }
+        .category-header {
+            background: linear-gradient(135deg, #4fc9c4 0%, #3cc3bf 100%);
+        }
+        .add-api-form {
+            background: linear-gradient(135deg, #ebf9f9 0%, #d8f3f2 100%);
+        }
+        .dark .add-api-form {
+            background: linear-gradient(135deg, #123b39 0%, #0c2726 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="category-header text-white py-8 shadow-lg">
+            <div class="container mx-auto px-4 max-w-6xl">
+                <div class="text-center">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                        <i class="fas fa-code mr-3"></i>APIs Úteis
+                    </h1>
+                    <p class="text-xl md:text-2xl opacity-90">
+                        Catálogo completo de APIs gratuitas para desenvolvedores
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <div class="container mx-auto px-4 py-8 max-w-6xl">
+            <!-- Add New API Form -->
+            <div class="add-api-form rounded-xl p-6 mb-8 shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">
+                    <i class="fas fa-plus-circle mr-2 text-turquoise-800"></i>
+                    Adicionar Nova API
+                </h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <input 
+                        type="text" 
+                        id="apiName" 
+                        placeholder="Nome da API" 
+                        class="w-full px-4 py-3 text-base border border-turquoise-300 rounded-lg focus:ring-2 focus:ring-turquoise-500 focus:border-turquoise-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    >
+                    <input 
+                        type="url" 
+                        id="apiUrl" 
+                        placeholder="URL da API" 
+                        class="w-full px-4 py-3 text-base border border-turquoise-300 rounded-lg focus:ring-2 focus:ring-turquoise-500 focus:border-turquoise-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    >
+                    <input 
+                        type="text" 
+                        id="apiDescription" 
+                        placeholder="Descrição da API" 
+                        class="w-full px-4 py-3 text-base border border-turquoise-300 rounded-lg focus:ring-2 focus:ring-turquoise-500 focus:border-turquoise-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    >
+                    <select 
+                        id="apiCategory" 
+                        class="w-full px-4 py-3 text-base border border-turquoise-300 rounded-lg focus:ring-2 focus:ring-turquoise-500 focus:border-turquoise-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                    >
+                        <option value="brasileiro">🇧🇷 Serviços Brasileiros</option>
+                        <option value="dados">📊 Dados & Utilidades</option>
+                        <option value="desenvolvimento">🔧 Desenvolvimento</option>
+                        <option value="geolocalizacao">📍 Geolocalização</option>
+                        <option value="comunicacao">📩 Comunicação</option>
+                        <option value="pagamentos">💳 Pagamentos</option>
+                        <option value="ia">🧠 Inteligência Artificial</option>
+                        <option value="produtividade">🎯 Produtividade</option>
+                    </select>
+                </div>
+                <button 
+                    onclick="addCustomAPI()" 
+                    class="mt-4 bg-turquoise-800 hover:bg-turquoise-900 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+                >
+                    <i class="fas fa-plus mr-2"></i>Adicionar API
+                </button>
+            </div>
+
+            <!-- API Categories -->
+            <div class="space-y-8">
+                <!-- Serviços Brasileiros -->
+                <div class="category" id="brasileiro">
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+                        <span class="bg-turquoise-800 text-white p-3 rounded-lg mr-4">🇧🇷</span>
+                        Serviços Brasileiros
+                    </h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Via CEP</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Consulta de CEP com retorno em JSON/XML</p>
+                            <a href="https://viacep.com.br/ws/01310-100/json/" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>Testar API Via CEP
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Loterias CAIXA</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Resultados de loterias da Caixa Econômica Federal</p>
+                            <a href="https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena/" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Mega-Sena Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">FIPE Automóveis</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Consulta preços de veículos pela tabela FIPE</p>
+                            <a href="https://parallelum.com.br/fipe/api/v1/carros/marcas" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API FIPE Carros Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Brasil API</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">CEP, CNPJ, bancos, feriados e muito mais</p>
+                            <a href="https://brasilapi.com.br/api/cep/v2/01310100" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Brasil CEP Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">CEP Aberto</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">API alternativa para consulta de CEP</p>
+                            <a href="https://cepaberto.com/api/v3/cep?cep=01310100" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API CEP Aberto Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">ReceitaWS</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Consulta dados de empresas por CNPJ</p>
+                            <a href="https://receitaws.com.br/v1/cnpj/27865757000102" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API ReceitaWS CNPJ Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">CNES - SUS</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Cadastro Nacional de Estabelecimentos de Saúde</p>
+                            <a href="http://cnes2.datasus.gov.br/Mod_Ind_Unidade.asp?VEstado=35&VMun=354870&VComp=202312" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API CNES Estabelecimentos
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">DataSUS</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Dados abertos de saúde pública do Brasil</p>
+                            <a href="https://opendatasus.saude.gov.br/api/3/action/package_list" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API DataSUS Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">CNS Validador</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Validação de Cartão Nacional de Saúde</p>
+                            <a href="https://servicos.saude.gov.br/cns/validacns" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>Validar CNS
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Correios Rastreamento</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Rastreamento de encomendas dos Correios</p>
+                            <a href="https://api.linketrack.com/track/json?user=teste&token=1abcd00b2731640e886fb41a8a9671ad1434c599dbaa0a0de9a5aa619f29a83f&codigo=OD014752225BR" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Rastreamento Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">IBGE Localidades</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Estados, municípios e distritos do Brasil</p>
+                            <a href="https://servicodados.ibge.gov.br/api/v1/localidades/estados" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API IBGE Estados Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Banco Central</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Taxas de juros, inflação e cotações oficiais</p>
+                            <a href="https://api.bcb.gov.br/dados/serie/bcdata.sgs.1/dados/ultimos/1?formato=json" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API BACEN Selic Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">CNPJ.ws</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Consulta dados completos de empresas</p>
+                            <a href="https://www.cnpj.ws/27865757000102" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API CNPJ.ws Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Feriados Nacionais</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Feriados nacionais e pontes do Brasil</p>
+                            <a href="https://brasilapi.com.br/api/feriados/v1/2024" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Feriados 2024 Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Bancos Brasil</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Lista de todos os bancos brasileiros</p>
+                            <a href="https://brasilapi.com.br/api/banks/v1" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Bancos Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">DDD Brasil</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Códigos DDD e suas respectivas cidades</p>
+                            <a href="https://brasilapi.com.br/api/ddd/v1/11" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API DDD São Paulo Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">ISBN Brasil</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Informações de livros por ISBN</p>
+                            <a href="https://brasilapi.com.br/api/isbn/v1/9788545702870" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API ISBN Livros Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">PIX Participants</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Lista de participantes do PIX</p>
+                            <a href="https://brasilapi.com.br/api/pix/v1/participants" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API PIX Participantes Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">CNAE Códigos</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Classificação Nacional de Atividades Econômicas</p>
+                            <a href="https://brasilapi.com.br/api/cnae/v1/0111301" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API CNAE Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">NCM Códigos</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Nomenclatura Comum do Mercosul</p>
+                            <a href="https://brasilapi.com.br/api/ncm/v1/01012100" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API NCM Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">CVM Fundos</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Dados da Comissão de Valores Mobiliários</p>
+                            <a href="https://brasilapi.com.br/api/cvm/corretoras/v1" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API CVM Corretoras Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Registros BR</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Domínios .br registrados</p>
+                            <a href="https://brasilapi.com.br/api/registrobr/v1/google.com.br" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Registro.br Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Taxas Brasil</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">CDI, SELIC e outras taxas oficiais</p>
+                            <a href="https://brasilapi.com.br/api/taxas/v1" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Taxas Oficiais Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">CEF Loterias Todas</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Quina, Lotomania, Timemania e outras</p>
+                            <a href="https://servicebus2.caixa.gov.br/portaldeloterias/api/quina/" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Quina Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">IBGE Noticias</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Notícias e releases do IBGE</p>
+                            <a href="https://servicodados.ibge.gov.br/api/v3/noticias/" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API IBGE Notícias Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">TSE Eleições</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Dados eleitorais e candidatos</p>
+                            <a href="https://divulgacandcontas.tse.jus.br/divulga/rest/v1/eleicao/buscar/2022/2" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API TSE Eleições Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">CPTEC Clima</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Previsão do tempo INPE/CPTEC</p>
+                            <a href="https://servicos.cptec.inpe.br/XML/listaCidades" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API CPTEC Cidades Direto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desenvolvimento -->
+                <div class="category" id="desenvolvimento">
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+                        <span class="bg-turquoise-800 text-white p-3 rounded-lg mr-4">🔧</span>
+                        Desenvolvimento & Testes
+                    </h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">JSONPlaceholder</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">API fake para testes e prototipagem</p>
+                            <a href="https://jsonplaceholder.typicode.com/posts" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API JSON Posts Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">GitHub API</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Acesso a repositórios, usuários e issues</p>
+                            <a href="https://api.github.com/users/octocat" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API GitHub Usuários Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">REST Countries</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Informações sobre países do mundo</p>
+                            <a href="https://restcountries.com/v3.1/all" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Países Direto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dados & Utilidades -->
+                <div class="category" id="dados">
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+                        <span class="bg-turquoise-800 text-white p-3 rounded-lg mr-4">📊</span>
+                        Dados & Utilidades
+                    </h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">OpenWeatherMap</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Dados meteorológicos em tempo real</p>
+                            <a href="https://api.openweathermap.org/data/2.5/weather?q=London&appid=demo" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Clima Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">ExchangeRate API</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Cotações de moedas em tempo real</p>
+                            <a href="https://api.exchangerate-api.com/v4/latest/USD" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Câmbio Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">NewsAPI</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Notícias de fontes confiáveis</p>
+                            <a href="https://newsapi.org/v2/top-headlines?country=us&apiKey=demo" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Notícias Direto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Geolocalização -->
+                <div class="category" id="geolocalizacao">
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+                        <span class="bg-turquoise-800 text-white p-3 rounded-lg mr-4">📍</span>
+                        Geolocalização & Mapas
+                    </h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Nominatim</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Geocodificação gratuita do OpenStreetMap</p>
+                            <a href="https://nominatim.openstreetmap.org/search?q=São+Paulo&format=json" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Nominatim Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">IP Geolocation</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Localização por endereço IP</p>
+                            <a href="https://ipapi.co/json/" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API IP Localização Direto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Inteligência Artificial -->
+                <div class="category" id="ia">
+                    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6 flex items-center">
+                        <span class="bg-turquoise-800 text-white p-3 rounded-lg mr-4">🧠</span>
+                        Inteligência Artificial
+                    </h2>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Hugging Face</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Modelos de IA open-source</p>
+                            <a href="https://api-inference.huggingface.co/models/facebook/bart-large-mnli" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Hugging Face Direto
+                            </a>
+                        </div>
+
+                        <div class="api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                            <h3 class="text-xl font-semibold text-gray-800 dark:text-white mb-3">Random.org</h3>
+                            <p class="text-gray-600 dark:text-gray-300 mb-4">Números aleatórios verdadeiros</p>
+                            <a href="https://www.random.org/integers/?num=10&min=1&max=100&col=1&base=10&format=plain&rnd=new" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                                <i class="fas fa-external-link-alt mr-2"></i>API Random Direto
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-8 mt-16">
+            <div class="container mx-auto px-4 max-w-6xl text-center">
+                <p class="text-gray-300">
+                    <i class="fas fa-heart text-turquoise-500 mr-2"></i>
+                    Catálogo de APIs gratuitas para desenvolvedores
+                </p>
+                <p class="text-gray-400 mt-2 text-sm">
+                    Sempre verifique os termos de uso e limites de cada API
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Dark mode detection
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Add custom API function
+        function addCustomAPI() {
+            const name = document.getElementById('apiName').value.trim();
+            const url = document.getElementById('apiUrl').value.trim();
+            const description = document.getElementById('apiDescription').value.trim();
+            const category = document.getElementById('apiCategory').value;
+
+            if (!name || !url || !description) {
+                showAlert('Por favor, preencha todos os campos para adicionar uma nova API.');
+                return;
+            }
+
+            // Validate URL
+            try {
+                new URL(url);
+            } catch (e) {
+                showAlert('Por favor, insira uma URL válida.');
+                return;
+            }
+
+            // Create new API card
+            const categoryDiv = document.getElementById(category);
+            const gridDiv = categoryDiv.querySelector('.grid');
+            
+            const newApiCard = document.createElement('div');
+            newApiCard.className = 'api-card bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg';
+            newApiCard.innerHTML = `
+                <div class="flex justify-between items-start mb-3">
+                    <h3 class="text-xl font-semibold text-gray-800 dark:text-white">${name}</h3>
+                    <button onclick="this.closest('.api-card').remove()" class="text-red-500 hover:text-red-700 ml-2">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+                <p class="text-gray-600 dark:text-gray-300 mb-4">${description}</p>
+                <a href="${url}" target="_blank" class="inline-flex items-center text-turquoise-800 hover:text-turquoise-900 font-medium">
+                    <i class="fas fa-external-link-alt mr-2"></i>Acessar API
+                </a>
+            `;
+
+            gridDiv.appendChild(newApiCard);
+
+            // Clear form
+            document.getElementById('apiName').value = '';
+            document.getElementById('apiUrl').value = '';
+            document.getElementById('apiDescription').value = '';
+            document.getElementById('apiCategory').value = 'brasileiro';
+
+            // Success feedback
+            showAlert('API adicionada com sucesso! 🎉', 'success');
+        }
+
+        // Custom alert function
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `fixed top-4 right-4 z-50 p-4 rounded-lg shadow-lg max-w-sm w-full mx-4 ${
+                type === 'success' ? 'bg-green-500' : 'bg-turquoise-600'
+            } text-white`;
+            alertDiv.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span>${message}</span>
+                    <button onclick="this.closest('div').remove()" class="ml-3 text-white hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(alertDiv);
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+
+        // Enter key support for form
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && e.target.closest('.add-api-form')) {
+                addCustomAPI();
+            }
+        });
+    </script>
+</body>
+</html>
