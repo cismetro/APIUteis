@@ -39,6 +39,9 @@
             box-shadow: 0 8px 25px rgba(79, 201, 196, 0.15);
             border-left-color: #3cc3bf;
         }
+        .dark .api-card:hover {
+            box-shadow: 0 8px 25px rgba(79, 201, 196, 0.3);
+        }
         .category-header {
             background: linear-gradient(135deg, #4fc9c4 0%, #3cc3bf 100%);
         }
@@ -46,15 +49,187 @@
             background: linear-gradient(135deg, #ebf9f9 0%, #d8f3f2 100%);
         }
         .dark .add-api-form {
-            background: linear-gradient(135deg, #123b39 0%, #0c2726 100%);
+            background: linear-gradient(135deg, #0a1f1e 0%, #051211 100%);
+            border: 1px solid #1a3938;
+        }
+        
+        /* True Black Theme Support */
+        .dark {
+            color-scheme: dark;
+        }
+        .dark body {
+            background-color: #000000 !important;
+        }
+        .dark .api-card {
+            background-color: #111111 !important;
+            border-color: #333333;
+            border-left-color: #4fc9c4;
+        }
+        .dark .category-header {
+            background: linear-gradient(135deg, #2a5a57 0%, #1f4744 100%);
+        }
+        
+        /* Enhanced contrast for dark mode */
+        .dark h1, .dark h2, .dark h3 {
+            color: #ffffff !important;
+        }
+        .dark p {
+            color: #cccccc !important;
+        }
+        .dark .text-gray-600 {
+            color: #aaaaaa !important;
+        }
+        .dark .text-gray-400 {
+            color: #888888 !important;
+        }
+        .dark .text-gray-800 {
+            color: #ffffff !important;
+        }
+        .dark .text-gray-200 {
+            color: #ffffff !important;
+        }
+        .dark .text-gray-300 {
+            color: #cccccc !important;
+        }
+        
+        /* Links in dark mode - better contrast */
+        .dark .text-turquoise-800 {
+            color: #76d5d2 !important;
+        }
+        .dark .text-turquoise-800:hover {
+            color: #8adbd8 !important;
+        }
+        .dark .text-turquoise-900 {
+            color: #8adbd8 !important;
+        }
+        .dark .text-turquoise-600 {
+            color: #76d5d2 !important;
+        }
+        
+        /* Search bar dark theme */
+        .dark #searchAPI {
+            background-color: #111111 !important;
+            border-color: #333333 !important;
+            color: #ffffff !important;
+        }
+        .dark #searchAPI:focus {
+            border-color: #4fc9c4 !important;
+            box-shadow: 0 0 0 2px rgba(79, 201, 196, 0.3) !important;
+        }
+        .dark #searchAPI::placeholder {
+            color: #666666 !important;
+        }
+        
+        /* Form inputs light theme */
+        input, select {
+            background-color: #ffffff !important;
+            border-color: #4fc9c4 !important;
+            color: #000000 !important;
+        }
+        input::placeholder {
+            color: #666666 !important;
+            opacity: 1 !important;
+        }
+        select option {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+        }
+        
+        /* Form inputs dark theme */
+        .dark input, .dark select {
+            background-color: #1a1a1a !important;
+            border-color: #404040 !important;
+            color: #ffffff !important;
+        }
+        .dark input:focus, .dark select:focus {
+            border-color: #4fc9c4 !important;
+            box-shadow: 0 0 0 2px rgba(79, 201, 196, 0.3) !important;
+        }
+        .dark input::placeholder {
+            color: #aaaaaa !important;
+            opacity: 1 !important;
+        }
+        .dark select option {
+            background-color: #1a1a1a !important;
+            color: #ffffff !important;
+        }
+        
+        /* Smooth transitions */
+        * {
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+        }
+        
+        /* Scrollbar dark theme */
+        .dark ::-webkit-scrollbar {
+            width: 8px;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #111111;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #333333;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #4fc9c4;
+        }
+        
+        /* Footer dark theme */
+        .dark footer {
+            background-color: #000000 !important;
+            border-top: 1px solid #222222;
+        }
+        
+        /* Button hover effects in dark mode */
+        .dark button:hover {
+            background-color: #2a5a57 !important;
+        }
+        
+        /* Loading states */
+        .search-loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        /* High contrast mode detection */
+        @media (prefers-contrast: high) {
+            .dark .api-card {
+                border-width: 2px;
+            }
+            .dark h1, .dark h2, .dark h3 {
+                font-weight: 700;
+            }
+        }
+        
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+            .api-card:hover {
+                transform: none;
+            }
         }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
     <div class="min-h-screen">
         <!-- Header -->
-        <header class="category-header text-white py-8 shadow-lg">
+        <header class="category-header text-white py-8 shadow-lg relative">
             <div class="container mx-auto px-4 max-w-6xl">
+                <!-- Theme Toggle Button -->
+                <div class="absolute top-4 right-4 md:top-6 md:right-6">
+                    <button 
+                        id="themeToggle"
+                        onclick="toggleTheme()"
+                        class="theme-toggle-btn bg-white bg-opacity-20 hover:bg-opacity-30 backdrop-blur-sm border border-white border-opacity-30 rounded-full p-3 transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50"
+                        title="Alternar tema claro/escuro"
+                    >
+                        <i id="themeIcon" class="fas fa-moon text-white text-lg"></i>
+                    </button>
+                </div>
+                
                 <div class="text-center">
                     <h1 class="text-4xl md:text-5xl font-bold mb-4">
                         <i class="fas fa-code mr-3"></i>APIs Úteis
@@ -502,15 +677,66 @@
     </div>
 
     <script>
-        // Dark mode detection
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-        }
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-            if (event.matches) {
+        // Theme management
+        let currentTheme = 'auto'; // 'light', 'dark', 'auto'
+        
+        function initTheme() {
+            // Check system preference for initial load
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 document.documentElement.classList.add('dark');
+                updateThemeIcon();
+            }
+        }
+        
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            
+            if (isDark) {
+                // Switch to light mode
+                html.classList.remove('dark');
+                currentTheme = 'light';
             } else {
-                document.documentElement.classList.remove('dark');
+                // Switch to dark mode  
+                html.classList.add('dark');
+                currentTheme = 'dark';
+            }
+            
+            updateThemeIcon();
+            
+            // Add subtle animation feedback
+            const button = document.getElementById('themeToggle');
+            button.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 150);
+        }
+        
+        function updateThemeIcon() {
+            const icon = document.getElementById('themeIcon');
+            const isDark = document.documentElement.classList.contains('dark');
+            
+            if (isDark) {
+                icon.className = 'fas fa-sun text-white text-lg';
+                icon.parentElement.title = 'Alternar para modo claro';
+            } else {
+                icon.className = 'fas fa-moon text-white text-lg';
+                icon.parentElement.title = 'Alternar para modo escuro';
+            }
+        }
+        
+        // Initialize theme on load
+        initTheme();
+        
+        // Listen for system theme changes (but don't override manual selection)
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (currentTheme === 'auto') {
+                if (event.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+                updateThemeIcon();
             }
         });
 
